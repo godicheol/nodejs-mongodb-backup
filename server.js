@@ -25,10 +25,12 @@ var getDir = function() {
 var backup = function() {
     var options = [];
     var options2 = {};
+    if (config.uri) { options.push("--uri="+config.uri); }
     if (config.host) { options.push("--host="+config.host); }
     if (config.port) { options.push("--port="+config.port); }
     if (config.db) { options.push("--db="+config.db); }
     if (config.authenticationDatabase) { options.push("--authenticationDatabase="+config.authenticationDatabase); }
+    if (config.authenticationMechanism) { options.push("--authenticationMechanism="+config.authenticationMechanism); }
     if (config.username) { options.push("--username="+config.username); }
     if (config.password) { options.push("--password="+config.password); }
     if (config.gzip) { options.push("--gzip"); }
@@ -58,9 +60,9 @@ var backup = function() {
 // │    │    └─────────────── hour (0 - 23)
 // │    └──────────────────── minute (0 - 59)
 // └───────────────────────── second (0 - 59, OPTIONAL)
-var task = schedule.scheduleJob('0,10,20,30,40,50 * * * * *', function() {
+var task = schedule.scheduleJob('0 * * * * *', function() {
     try {
-        backup(); // test
+        backup();
     } catch(err) {
         console.log(err);
     }
